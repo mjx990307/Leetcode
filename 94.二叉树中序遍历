@@ -1,0 +1,39 @@
+//二叉树中序遍历，可以递归，也可以迭代
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ //迭代
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+		    	List<Integer> list = new ArrayList<>();       //用来返回结果
+		    	TreeNode cur = root;                          //保存根节点，也可以不设置
+		    	Stack<TreeNode> s = new Stack<>();            //用栈来保存之前的结点
+		    	while (cur != null || !s.isEmpty()) {         //当栈不空并且当前节点不空时进入循环
+		    		if (cur != null) {                          //判断是否走到左下结点
+		    			s.push(cur);                              //将沿途结点压入栈中
+		    			cur = cur.left;                           //向左下方移动
+		    		} else {                                    //到了左下方结点
+		    			cur = s.pop();                            //弹出该节点
+		    			list.add(cur.val);                        //将该节点放入结果集中，也可以做其他操作
+		    			cur = cur.right;                          //对该节点的右子树进行遍历
+		    		}
+		    	}
+		    	return list;
+		    }
+}
+//递归
+class Solution {
+    List<Integer> list = new ArrayList<>();
+    public List<Integer> inorderTraversal(TreeNode root) {
+            if (root != null) {
+                inorderTraversal(root.left);
+                list.add(root.val);
+                inorderTraversal(root.right);
+            }
