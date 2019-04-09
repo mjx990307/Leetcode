@@ -1,0 +1,28 @@
+//二叉树的前序遍历，可以递归，可以迭代
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+ //迭代
+class Solution {
+	    public List<Integer> preorderTraversal(TreeNode root) {
+            List<Integer> list = new ArrayList<>();
+	    	    Stack<TreeNode> s = new Stack<>();
+            if (root == null) {
+                return list;                                //判断根节点是否为空
+            }
+	    	    s.push(root);
+	    	    while (!s.isEmpty()) {
+	    		    root = s.pop();
+	    		    list.add(root.val);                           //遍历该节点
+	    		    if (root.right != null) s.push(root.right);   //如果右子树不空，将右子树压入栈中
+              if (root.left != null) s.push(root.left);     //如果左子树不空，将左子树压入栈中    因为遍历顺序位根左右，所以右子树先压栈，
+	    	    }                                               //才能先遍历左子树
+	    	    return list;                                    //返回结果集
+	    }
+	}
