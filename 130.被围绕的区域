@@ -1,0 +1,39 @@
+//这道题我刚开始写的时候想一个一个遍历，然后用感染函数
+//判断边界以及边界前一个为'O'和边界为'O'是否同时成立
+//想想还是太年轻，看了大佬的思路，自己改了一下
+
+class Solution {
+    public void solve(char[][] board) {
+        if (board == null || board.length == 0) {
+            return;                                           //排除特殊情况
+        }
+        for (int i = 0; i < board.length; i++) {              //将边界为'O'的用感染函数都置为'A'，以免下一次遍历时改变掉该值
+        	fill(board, i, 0);
+        	fill(board, i, board[0].length - 1);
+        }
+        for (int i = 0; i < board[0].length; i++) {
+        	fill(board, 0, i);
+        	fill(board, board.length - 1, i);
+        }
+        for (int i = 0; i < board.length; i++) {              
+        	for (int j = 0; j < board[0].length; j++) {
+        		if (board[i][j] == 'O') {                         //如果是上一次遍历时没有感染的'O',则将其置为'X'
+        			board[i][j] = 'X';
+        		}
+        		if (board[i][j] == 'A') {                         //如果与边界的'O'相连，则改变回'O'
+        			board[i][j] = 'O';
+        		}
+        	}
+        }
+    }
+    public void fill(char[][] arr, int i, int j) {
+    	if (i < 0 || j < 0 || i > arr.length - 1 || j > arr[0].length - 1 || arr[i][j] != 'O') {
+    		return;
+    	}
+    	arr[i][j] = 'A';
+    	fill(arr, i, j - 1);
+    	fill(arr, i, j + 1);
+    	fill(arr, i - 1, j);
+    	fill(arr, i + 1, j);
+    }
+}
