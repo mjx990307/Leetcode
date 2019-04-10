@@ -1,0 +1,28 @@
+//这是一道简单的DFS题， 找到一个岛的一部分，从这个
+//点出发，把该岛都置为'0'
+
+
+class Solution {
+	    public int numIslands(char[][] grid) {
+	    	int count = 0;                                      //初始化岛的个数
+	    	for (int i = 0; i < grid.length; i++) {             //遍历整个图
+	    		for (int j = 0; j < grid[0].length; j++) {
+	    			if (grid[i][j] == '1') {                        //如果是岛的一部分
+	    				change(grid, i, j);                           //将该岛消除
+	    				count++;                                      //岛的数量加一
+	    			}
+	    		}
+	    	}
+	        return count;
+	    }
+	    public void change(char[][] arr, int i, int j) {      //感染函数，消除已经算过的岛
+	    	if (i < 0 || j < 0 || i > arr.length - 1 || j > arr[0].length - 1 || arr[i][j] != '1') {
+	    		return;                                                   //判断数组是否越界以及该点是否是岛的边界
+	    	}
+	    	arr[i][j] = '0';                                            //将该部分消除
+	    	change(arr, i, j - 1);                                      //递归消除整个岛
+	    	change(arr, i - 1, j);
+	    	change(arr, i + 1, j);
+	    	change(arr, i, j + 1);
+	    }
+	}
