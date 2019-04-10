@@ -1,0 +1,32 @@
+//判断一个链表是否有环
+//java有两种方式，一种是用哈希表，遍历链表，同时将结点放入哈希表中，如果出现重复的
+//结点，说明有环，如果当前节点等于null，则说明无环
+//另一种方式是双指针，一个快指针，一个慢指针，若两指针相遇，则说明有环
+//哈希表
+public boolean hasCycle(ListNode head) {
+        Set<ListNode> set = new HashSet<>();            //创建哈希表
+        ListNode node = head;                           //指向头指针
+        while (node != null) {                          //若当前节点不为空
+        	if (set.contains(node)) {                     //判断是否来到过这个结点
+        		return true;                                //有环
+        	}
+        	set.add(node);                                //将当前结点加入哈希表中
+        }
+    }
+    
+//双指针
+public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) {        //判断头节点是否为空
+            return false;
+        }
+        ListNode low = head;                            //慢指针设为头节点
+        ListNode fast = head.next;                      //头节点下一个结点设为快指针
+        while (fast != low) {                           //当快指针不等于慢指针
+        	if (fast == null || fast.next == null) {      //如果快指针下一个结点或者快指针不为空
+        		return false;                               //到链表结尾则无环
+        	}
+        	fast = fast.next.next;                        //快指针向前移两步
+        	low = low.next;                               //慢指针向前移一步
+        }
+        return true;                                    //快慢指针相遇 有环
+    }
