@@ -1,0 +1,64 @@
+//这道题的解法真的是让我大开眼界，无敌了
+//设置两个指针，初始化为两个链表的头指针
+//在第一次遍历时，到达结尾会指向两一个链表的头指针
+//这样会消除长度差
+//在第一次遍历完后，两个指针都会从短链表的头部位置开始比较
+//第二轮比较，若相等且不是在链表结尾处，则有交点，若等于null，则没有交点
+//所以最后返回一个指针即可，不管是空还是交点
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+		ListNode pa = headA;
+		ListNode pb = headB;
+		while (pa != pb) {
+			pa = pa == null ? headB : pa.next;
+			pb = pb == null ? headA : pb.next;
+		}
+		return pa;
+	}
+}
+
+//另一种方法，看到别人的，当成判断链表是否有环来做，如果有环，则交点是环的起始位置
+class Solution {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null) {
+            return null;                                              //若一个链表为空，则没有交点
+        }
+        ListNode last = headB;                                        
+        while (last.next != null) {                                   //寻找B链表的尾节点
+            last = last.next;
+        }
+        last.next = headB;                                            //将为节点指向头节点，此时B链表是一个环
+                                                                      //环的起始位置为B链表的头节点
+        ListNode fast = headA;                                        //快指针为A的头节点
+        ListNode slow = headA;                                        //慢指针为A的头节点
+
+        while (fast != null && fast.next != null) {                   //当快指针的下一个或当前指针不为空
+            slow = slow.next;                                         //慢指针向前移动一步
+            fast = fast.next.next;                                    //快指针向前移动两步
+            if (slow == fast) {                                       //如果快慢指针相遇，则证明AB有交点
+                slow = headA;                                         //慢指针重新指向A的头节点
+                while (slow != fast) {                                //当慢指针不等于快指针
+                    slow = slow.next;                                 //慢指针前移
+                    fast = fast.next;                                 //快指针前移
+                }
+                last.next = null;                                     //释放B结点尾部指针的指向，原来指向B的头节点
+                return fast;                                          //返回交点的位置
+            }
+        }
+        last.next = null;                                             //无交点，释放B链表尾节点的指向
+        return null;                                                  //返回null
+    }
+}
