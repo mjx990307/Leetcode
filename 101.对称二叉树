@@ -1,0 +1,69 @@
+//这道题我一开始想偏了，应该是左结点的左结点和右结点的右结点相等
+//左结点的右结点和右结点的左结点相等才能判定树对称的
+//我想成了一个结点的左右节点相等，这种情况只对头节点使用
+//看来还是太年轻
+//另外，当两个结点都为空时，相等然后返回
+//两个节点不相等直接返回false
+//若值相等，则再接着判断
+//两种方法，递归和迭代
+
+
+//迭代
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+		
+		Queue<TreeNode> queue = new LinkedList<>();           //用队列装结点
+		queue.add(root);                                      //将头节点装两次，这样弹出两次头节点，也可以装头节点左右节点各一次
+		queue.add(root);
+		while (!queue.isEmpty()) {                            //当队列不为空
+			TreeNode left = queue.poll();                       //弹出队列开头的两个节点
+			TreeNode right = queue.poll();
+			if (left == null && right == null) {                //如果这两个节点都是空，则重新弹出两个节点
+				continue;
+			}
+			if (left == null || right == null) {                //如果相应位置上的结点一个为空，一个不为空，则肯定不对称，直接返回false
+				return false;
+			}
+			if (left.val == right.val) {                        //如果相应位置上的节点值相等，则接着判断下面的结点
+				queue.add(left.left);                             
+				queue.add(right.right);
+				queue.add(left.right);
+				queue.add(right.left);
+			} else {
+				return false;
+			}
+		}
+		return true;
+    }
+}
+
+
+//递归
+public boolean isSymmetric(TreeNode root) {
+    if (root == null) {                             //先判断特殊情况 根节点为null
+        return true;
+    }
+    return issame(root.left, root.right);           //判断根节点以下的结点
+}
+public boolean issame(TreeNode left, TreeNode right) {
+    if (left == null && right == null) {
+        return true;
+    }
+    if (left == null || right == null) {
+        return false;
+    }
+    if (left.val == right.val) {
+        return issame(left.left, right.right) && issame(left.right, right.left);
+    } else {
+        return false;
+    }
+}
