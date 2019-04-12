@@ -1,0 +1,42 @@
+//二叉树的层次遍历在学数据结构的时候已经会了
+//这道题就是要返回了一个含有集合的集合，不会返回这种形式
+//看了一下别人的代码，把这个学会了
+//就是再弹出一层的第一个节点之前，得到这一层节点的数量，即队列目前的大小
+//然后循环遍历这一层的每个节点
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+		Queue<TreeNode> queue = new LinkedList<>();                       //建立一个队列
+		List<List<Integer>> l = new ArrayList<>();                        //建立一个包含队列的队列
+        if (root == null) {                                           //如果根节点为空，则返回空的集合
+            return l;
+        }
+		queue.add(root);                                                  //将根节点加入队列
+		while (!queue.isEmpty()) {                                        //当队列不空
+			List<Integer> list = new ArrayList<>();                         //创建保存当前层结点的集合
+			int count = queue.size();                                       //得到当前层的结点个数
+			for (int i = 0; i < count; i++) {                               //循环当前层
+				TreeNode cur = queue.poll();                                  //弹出节点
+				list.add(cur.val);                                            //将该节点加入集合
+				if (cur.left != null) {                                       //如果该节点左结点不空，则加入队列
+					queue.add(cur.left);
+				}
+				if (cur.right != null) {                                      //如果该节点的右结点不空，则加入队列
+					queue.add(cur.right);
+				}
+			}
+			l.add(list);                                                    //把当前层的集合加入总的集合中
+		}
+        return l;                                                     //返回总的集合
+    }
+}
