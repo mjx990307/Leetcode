@@ -1,0 +1,30 @@
+//这道题的思路和106题的思路差不多，改一下代码就可以了
+//具体解析就不写了
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+		return preAndIn(0, preorder.length - 1, preorder, 0, inorder.length - 1, inorder);
+	}
+	public TreeNode preAndIn(int preleft, int preright, int[] pre, int inleft, int inright, int[] in) {
+		if (preleft > preright || inleft > inright) {
+			return null;
+		}
+		TreeNode root = new TreeNode(pre[preleft]);
+		int inroot = inleft;
+		while (inroot <= inright && in[inroot] != pre[preleft]) inroot++;
+		int leftlen = inroot - inleft;
+		root.left = preAndIn(preleft + 1, preleft + leftlen, pre, inleft, inroot - 1, in);
+		root.right = preAndIn(preleft + leftlen + 1, preright, pre, inroot + 1, inright, in);
+		return root;
+	}
+}
