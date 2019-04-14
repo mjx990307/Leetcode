@@ -1,0 +1,50 @@
+//这道题的思路和数组转二叉搜索树的思路差不多
+//只不过是找到中点的方式有所变化
+//可以用快慢指针，一个走两步，一个走一步，慢指针指的就是中点了
+//还有左子树的取值范围，可以把中点前一个结点的next指针设为null， 也可以设置尾指针
+//关于快慢指针的应用，判断链表是否有环时也会用到，应好好掌握
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+    	if (head == null) {                                                   //头指针为空返回null
+    		return null;
+    	}
+    	return sortToTree(head);                                              //递归建树
+    }
+    public TreeNode sortToTree(ListNode head) {
+        if(head == null || head.next == null){                              //如果头节点为空，则是空结点，如果只有头节点，则是叶节点
+            return head == null ? null : new TreeNode(head.val);
+        }
+    	ListNode fast = head;                                                 //设置快指针
+    	ListNode slow = head;                                                 //设置慢指针
+    	ListNode last = head;                                                 //设置中点前一个结点的指针
+    	while (fast != null && fast.next != null) {                           //当快指针下一个结点不为空并且当前结点不为空时
+    		fast = fast.next.next;                                              //快指针走两步
+    		last = slow;                                                        //保存慢指针前一个指针
+    		slow = slow.next;                                                   //慢指针走一步
+    	}
+    	TreeNode root = new TreeNode(slow.val);                               //中点即根节点，即慢指针指向的结点
+    	last.next = null;                                                     //断开前半部分节点
+    	root.left = sortToTree(head);                                         //递归建立左子树
+    	root.right = sortToTree(slow.next);                                   //递归建立右子树
+    	return root;
+    }
+}
