@@ -1,0 +1,38 @@
+//这道题可以结合求二叉树的高度来做
+//如果左子树的高度和右子树的高度差大于1， 那么不是平衡二叉树
+//直接返回false
+//如果左子树和y右子树高度差小于1， 那么接着判断左子树和右子树分别是不是平衡二叉树
+//不过这种方法比较慢，每一次都要计算各结点左右子树的高度
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+    	return is(root);
+    }
+    public boolean is(TreeNode root) {
+    	if (root == null) {
+    		return true;                                                  //如果是空结点，则直接返回true，空结点肯定是平衡二叉树
+    	}
+    	int left = getlength(root.left);                                //求左子树高度
+    	int right = getlength(root.right);                              //求右子树高度
+    	if (Math.abs(left - right) > 1) {                               //如果左子树和右子树的高度差大于1，直接返回false
+            return false;
+        }
+        return is(root.left) && is(root.right);                       //判断左子树和右子树是不是平衡二叉树
+    }
+    public int getlength(TreeNode root) {
+    	if (root == null) {
+    		return 0;
+    	}
+    	return Math.max(getlength(root.left), getlength(root.right)) + 1;
+    }
+}
