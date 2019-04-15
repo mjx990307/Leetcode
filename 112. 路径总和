@@ -1,0 +1,27 @@
+//判断有没有到叶节点的路径，使该路经总和等于sum
+//每经过一个结点，就用sum - 这个结点的值
+//到叶节点的时候判断sum等不等于零
+//然后递归判断左右结点
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+		if (root == null) {
+			return false;                                                     //如果当前节点为空，则返回false
+		}
+		sum = sum - root.val;                                               //sum的值减去当前结点的值
+		if (sum == 0 && root.left == null && root.right == null) {          //如果是叶节点，判断符不符合条件
+			return true;
+		}
+		return hasPathSum(root.left, sum) || hasPathSum(root.right, sum);   //递归判断左子树和右子树
+	}
+}
