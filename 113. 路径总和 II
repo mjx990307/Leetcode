@@ -1,0 +1,37 @@
+//这道题要考虑的就是如何用list将各节点装起来
+//可以在满足叶节点的时候将整个集合装到最终集合去
+//在每次返回的时候都从当前集合弹出一个结点
+
+
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+		List<List<Integer>> list = new ArrayList<>();                                   //最终结果集
+		List<Integer> li = new ArrayList<>();                                           //装每天可能的路径
+		dfs(list, li, root, sum);                                                       //深度遍历该树
+		return list;                                                                    //返回结果集
+	}
+	public void dfs(List<List<Integer>> list, List<Integer> li, TreeNode root, int sum) {
+		if (root == null) {                                                             //如果当前节点是空结点，则返回
+			return;
+		}
+		li.add(root.val);                                                               //将当前节点加入到当前路径
+		sum = sum - root.val;                                                           //计算sum当前还剩多少值
+		if (sum == 0 && root.left == null && root.right == null) {                      //如果是满足要求的叶节点， 则将当前路径装入结果集中
+			list.add(new ArrayList<Integer>(li));
+		}
+		dfs(list, li, root.left, sum);                                                  //继续向下遍历，左子树
+		dfs(list, li, root.right, sum);                                                 //继续向下遍历右子树
+		li.remove(li.size() - 1);                                                       //返回的时候将当前结点弹出
+	}
+}
