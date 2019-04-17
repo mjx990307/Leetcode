@@ -1,0 +1,29 @@
+//这道题比较简单，就不多说了
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) {                                                           //如果根节点为空，则返回根节点
+            return head;
+        }
+		ListNode newhead = new ListNode(0);                                               //创建头节点，方便操作
+		newhead.next = head;                                                              //链接头节点
+		ListNode cur = newhead;                                                           //当前指针指向头节点
+		while (cur.next != null) {                                                        //如果当前结点的next不为空
+			if (cur.next.val == val) {                                                      //如果当前节点的下一个结点等于要删去的节点
+				cur.next = cur.next.next;                                                     //当前节点的next指向下一个节点的next
+			} else {
+				cur = cur.next;                                                               //否则当前节点向前移动
+			}
+		}
+		return newhead.next;                                                              //返回头节点
+	}
+}
