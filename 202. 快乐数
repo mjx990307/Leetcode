@@ -1,0 +1,28 @@
+//哈希的题当然要用哈希来解决啦
+//如果这个数可以变为各位平方和相加等于1，那么这个数一定不会重复
+//那么把得到的每一个数都放到哈希表里，如果出现重复的，就返回false
+//如果不重复，就放到哈希表里继续算，如果等于1，就返回true
+
+
+class Solution {
+    public boolean isHappy(int n) {
+        Set<Integer> set = new HashSet<>();                                               //创建新的哈希表
+        int sum = 0;                                                                      //设置和为0
+        while (true) {                                                                    //进入循环
+            while (n != 0) {                                                              //得到该数每一位的平方和
+        	    int i = n % 10;
+        	    sum = sum + i * i;
+                n = n / 10;
+            }
+            if (sum == 1) {                                                               //如果平方和等于1，返回true
+        	    return true;
+            } else if (set.contains(sum)) {                                               //如果重复了，就返回false
+        	    return false;
+            } else {                                                                      //否则加入到哈希表里，继续算
+                set.add(sum);
+            }
+            n = sum;                                                                      //n等于sum
+            sum = 0;                                                                      //充值sum
+        }
+    }
+}
