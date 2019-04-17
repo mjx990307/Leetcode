@@ -1,0 +1,25 @@
+//这道题又是看的大神的代码
+//连续的数字按位与，前边肯定有几位是相同的，不同的就是后边几位
+//类似于找最长公共前缀
+//m和n同时往右移一位，同时记录移动的位数，直到m和n相等，就是找到了最长的公共前缀
+//再把n左移回去就行了
+
+
+class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+    	int offset = 0;
+    	while (n > m) {
+    		m = m >> 1;
+    		n = n >> 1;
+    		offset++;
+    	}
+    	return n << offset;
+    }
+}
+public int rangeBitwiseAnd(int m, int n) {
+    	int offset = 0;
+    	while (n > m) {
+    		n &= (n - 1);
+    	}
+    	return n;
+    }
