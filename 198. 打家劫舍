@@ -1,0 +1,23 @@
+//这道题要用到动态规划
+//状态转移方程为 dp[i] = Math.max(dp[i - 2] + dp[i], dp[i - 1])
+
+class Solution {
+    public int rob(int[] nums) {
+    	int[] dp = new int[nums.length];                                                      //创建dp数组
+    	if (nums.length == 0 || nums == null) {                                               //如果nums中没有元素，返回0
+    		return 0;
+    	}
+    	if (nums.length == 1) {                                                               //如果nums中只有一个元素，返回这个元素
+    		return nums[0];
+    	}
+    	if (nums.length == 2) {                                                               //如果nums中有两个元素，返回较大值
+    		return nums[0] > nums[1] ? nums[0] : nums[1];
+    	}
+    	dp[0] = nums[0];                                                                      //到第一个房子为止能偷到的最大的钱是这个房子的值
+    	dp[1] = nums[0] > nums[1] ? nums[0] : nums[1];                                  //到第二个房子为止能偷到的最多的钱是第一个房子和第二个的较大值
+    	for (int i = 2; i < nums.length; i++) {                                         //从第三个房子开始，能偷到的最大的钱为到前一个房子为止能偷到的钱
+    		dp[i] = Math.max(dp[i - 2] + nums[i], dp[i - 1]);                             //和前两个房子和当前房子能偷到的前的总和的最大值
+    	}
+    	return dp[nums.length - 1];                                                     //返回dp数组的最后一个房子为止能偷到的最大的钱
+    }
+}
