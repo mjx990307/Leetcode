@@ -1,0 +1,36 @@
+//这道题用循环链表来做
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+		ListNode cur = head;
+        if (head == null) {                                                   //判断head是否为空 若为空 直接返回
+            return head;
+        }
+		int count = 1;                                                            //统计链表的长度
+		while (cur.next != null) {                                              
+			cur = cur.next;
+			count++;
+		}
+		ListNode tail = cur;                                                      //设立尾指针
+		int i = k % count;                                                        //算出循环次数
+		if (i == 0) {
+			return head;
+		}
+		cur.next = head;                                                          //将尾指针连接到头指针上
+		for (int j = 0; j < count - i; j++) {                                     //开始循环
+			head = head.next;
+			tail = tail.next;
+		}
+		tail.next = null;                                                         //断开尾指针
+		return head;                                                              //返回头指针
+	}
+}
