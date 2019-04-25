@@ -1,0 +1,34 @@
+//这道题就是旋转着把数字放到数组里面
+//先设立四个边界，up = 0，down = n - 1，right = n - 1，left = 0
+//然后按照顺序，先打印上边的一行，再打印右边的一行
+//再打印下边的一行，再打印左边的一行
+//这是大体的思路
+//在打印完每一行后，要把相应的行数减1，这样才符合边界的规定
+
+
+class Solution {
+    public int[][] generateMatrix(int n) {
+    	int[][] arr = new int[n][n];
+    	int down = n - 1, up = 0, right = n - 1, left = 0;                                  //初始化边界条件
+    	int count = 1;                                                              //初始化数字，开始为1
+    	while (count <= n * n) {                                                    //还没打印完时
+    		for (int i = left; i <= right; i++) {                                     //打印最上面的一行
+    			arr[up][i] = count++;                                                   //此时列为变量
+    		}
+    		up++;                                                                     //最上面的一行下移
+    		for (int i = up; i <= down; i++) {                                        //打印最右面的一行
+    			arr[i][right] = count++;                                                //此时行为变量
+    		}
+    		right--;                                                                  //最右面的一行左移
+    		for (int i = right; i >= left; i--) {                                     //打印最右面的一行
+    			arr[down][i] = count++;                                                 //此时列为变量
+    		}
+    		down--;                                                                   //最下面的一行上移
+    		for (int i = down; i >= up; i--) {                                        //打印最左面的一行
+    			arr[i][left] = count++;                                                 //此时行为变量
+    		}
+    		left++;                                                                   //最左面的一行右移
+    	}
+    	return arr;                                                                 //返回数组
+    }
+}
