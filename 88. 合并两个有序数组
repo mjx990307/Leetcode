@@ -1,0 +1,15 @@
+//一段非常简洁的代码
+//从后往前排
+
+
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+    	int k = m-- + n-- - 1;                                                //找到合并后的数组的最后一个位置
+    	while (m >= 0 && n >= 0) {                                            //当两个数组都还没有排完
+    		nums1[k--] = nums2[n] > nums1[m] ? nums2[n--] : nums1[m--];         //最后一个位置等于两个数组中的较大值
+    	}
+    	while (n >= 0) {                                                      //如果n还没有减完
+    		nums1[k--] = nums2[n--];                                            //继续将第二个数组排序
+    	}                                                                     //这里不用考虑第一个数组，因为第一个数组时本地数组，剩下的值就是返回值
+    }
+}
