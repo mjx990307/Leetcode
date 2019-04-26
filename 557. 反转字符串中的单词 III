@@ -1,0 +1,28 @@
+//这道题就是保存单个单词的开头，到空格为止，把这部分的字母反转
+//最后一个单词没有空格，所以最后要加上一个反转，范围为最后一个开头和结尾
+
+
+class Solution {
+    public String reverseWords(String s) {
+    	char[] arr = s.toCharArray();                                                     //转换成字符数组
+    	int begin = 0;                                                                    //第一个单词的开头为0
+    	int i = 0;                                                                        //计数
+    	for (i = 0; i < arr.length - 1; i++) {                                            //遍历每一个字母
+    		if (arr[i] == ' ') {                                                            //如果是空格
+    			reverse(arr, begin, i - 1);                                                   //反转开始到空格前一个字母
+    			begin = i + 1;                                                                //开始设置为下一个单词的开头
+    		}
+    	}
+    	reverse(arr, begin, arr.length - 1);                                              //最后反转最后一个单词
+        return new String(arr);                                                         //返回反转后的字符串
+    }
+    public void reverse(char[] arr, int left, int right) {
+    	while (left < right) {
+    		char temp = arr[left];
+    		arr[left] = arr[right];
+    		arr[right] = temp;
+    		left++;
+    		right--;
+    	}
+    }
+}
