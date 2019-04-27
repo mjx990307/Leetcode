@@ -1,0 +1,19 @@
+//这道题感觉还是挺不错的，给的是链表中的一部分，不是头节点
+//一开始我想的是从头节点开始遍历
+//后来没有找到头节点，才发现直接操作这个结点就可以了
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public void deleteNode(ListNode node) {
+		node.val = node.next.val;                                   //这个节点的值保存下一个结点的值
+		node.next = node.next.next;                                 //删除下一个结点
+	}
+}
