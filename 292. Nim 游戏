@@ -1,0 +1,9 @@
+//当堆中的石头是4的倍数时，不会赢
+//其他情况可以赢
+
+
+class Solution {
+    public boolean canWinNim(int n) {
+        return n % 4 != 0;
+    }
+}
