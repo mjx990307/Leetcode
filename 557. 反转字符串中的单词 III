@@ -26,3 +26,21 @@ class Solution {
     	}
     }
 }
+
+
+//解法二
+class Solution {
+    public String reverseWords(String s) {
+    String[] Str=s.split(" ");  //按空格将其划分
+    ArrayList<String>list=new ArrayList<String>();
+    for(String k:Str){
+        k=new StringBuffer(k).reverse().toString();
+        list.add(k);
+    }    
+    StringBuffer sb=new StringBuffer();
+    for(String k:list){
+        sb.append(k+" ");
+    }
+        return sb.toString().substring(0,sb.toString().length()-1);        
+    }
+}
