@@ -1,0 +1,32 @@
+//大概思想就是后序遍历
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+		if (root == null) {                                                 //如果根节点==null，返回null
+			return null;
+		}
+		if (root == p || root == q) {                                       //如果根节点等于其中一个的值，说明另一个结点一定在根节点的子树中
+			return root;                                                      //返回根节点，此时根节点就是公共父节点
+		}
+		TreeNode left = lowestCommonAncestor(root.left, p, q);              //递归遍历左子树和右子树
+		TreeNode right = lowestCommonAncestor(root.right, p, q);
+		if (left != null && right != null) {                                //如果两个节点分布在左子树和右子树，则根节点就是公共父节点
+			return root;
+		} else if (left != null) {                                          //如果右子树为空，则公共父节点在左子树中，返回得到的公共父节点
+			return left;
+		} else if (right != null){                                          //左子树为空，相同情况
+			return right;
+		}
+		return null;                                                        //该侧子树不存在这两个节点，返回null
+    }
+}
