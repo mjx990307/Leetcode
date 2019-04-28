@@ -1,0 +1,23 @@
+//这道题可以利用二叉搜索树的性值，左子树比根节点的值大，比右结点的值小
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        if ((root.val - p.val) * (root.val - q.val) <= 0) {                                   //如果一个值比根节点大，一个值比根节点小
+			return root;                                                                            //那么根节点是公共父节点
+		} else if ((root.val - p.val) > 0) {                                                      //如果都在根节点左边，递归左子树
+			return lowestCommonAncestor(root.left, p, q);
+		} else {                                                                                  //否则递归右子树
+			return lowestCommonAncestor(root.right, p, q);
+		}
+    }
+}
