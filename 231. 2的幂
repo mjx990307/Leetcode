@@ -1,0 +1,19 @@
+//这道题利用位运算来解
+//如果是2的幂，那么二进制表示只有一位是1，用n - 1与其相与，如果等于0，那么就是2的幂
+
+
+//解法一
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+		    return (n > 0) && (n & (n - 1)) == 0;
+    }
+}
+
+
+//解法二
+//先得到2的最大幂，然后除以n，如果余数为0，那么n就是2的幂
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+		    return (n > 0) && (1 << 30) % n == 0;
+    }
+}
