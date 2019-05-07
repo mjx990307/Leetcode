@@ -1,0 +1,15 @@
+//算是用了贪心的算法
+//每天卖出再买入，如果第二天的价格比前一天高就卖出
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int pro = 0;
+		for (int i = 1; i < prices.length; i++) {
+			if (prices[i] > prices[i - 1]) {
+				pro += prices[i] - prices[i - 1];
+			}
+		}
+		return pro;
+    }
+}
